@@ -59,4 +59,6 @@ typedef NS_ENUM(NSInteger, VSLAudioControllerOutputs) {
  */
 - (void)deactivateAudioSession;
 
+- (void)setOutput:(VSLAudioControllerOutputs)output input:(AVAudioSessionPortDescription *_Nullable)input andPort:(AVAudioSessionPort _Nullable )port;
+
 @end

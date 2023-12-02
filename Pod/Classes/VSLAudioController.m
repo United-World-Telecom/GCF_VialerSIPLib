@@ -145,4 +145,30 @@ NSString * const VSLAudioControllerAudioResumed = @"VSLAudioControllerAudioResum
     }
 }
 
+- (void)setOutput:(VSLAudioControllerOutputs)output input:(AVAudioSessionPortDescription *)input andPort:(AVAudioSessionPort)port {
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    if (output == VSLAudioControllerOutputSpeaker) {
+        [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+        return;
+    }
+    
+    if ([port isEqualToString:AVAudioSessionPortBluetoothA2DP] || [port isEqualToString:AVAudioSessionPortBluetoothHFP] || [port isEqualToString: AVAudioSessionPortBluetoothLE]) {
+        [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+        [audioSession setPreferredInput:input error:nil];
+        return;
+    } else if ([port isEqualToString:AVAudioSessionPortBuiltInMic] || [port isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+        [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+        [audioSession setPreferredInput:input error:nil];
+        return;
+    } else if ([port isEqualToString:AVAudioSessionPortHeadphones] || [port isEqualToString:AVAudioSessionPortHeadsetMic]) {
+        [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+        [audioSession setPreferredInput:input error:nil];
+        return;
+    } else if ([port isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+        [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+        [audioSession setPreferredInput:input error:nil];
+        return;
+    }
+}
+
 @end
