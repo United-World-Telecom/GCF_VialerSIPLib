@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import AVFoundation;
 
 extern NSString * __nonnull const VSLAudioControllerAudioInterrupted;
 extern NSString * __nonnull const VSLAudioControllerAudioResumed;
