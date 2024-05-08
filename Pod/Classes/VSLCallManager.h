@@ -166,4 +166,5 @@
  *  @param account The VSLAccount instance for which to sent the UPDATE.
  */
 - (void)updateActiveCallsForAccount:(VSLAccount * _Nonnull)account;
+- (NSArray <VSLCall *> *)activeCallsForAccount:(VSLAccount *)account;
 @end
