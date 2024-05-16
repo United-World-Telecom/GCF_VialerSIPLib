@@ -161,7 +161,7 @@ static NSString * const VSLAccountErrorDomain = @"VialerSIPLib.VSLAccount";
     
     if ([[VSLEndpoint sharedEndpoint].endpointConfiguration hasTLSConfiguration]) {
         acc_cfg.srtp_secure_signaling = 1;
-        acc_cfg.use_srtp = PJMEDIA_SRTP_MANDATORY;
+        acc_cfg.use_srtp = PJMEDIA_SRTP_OPTIONAL;
     }
     
     if (accountConfiguration.turnConfiguration) {
