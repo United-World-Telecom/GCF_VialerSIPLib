@@ -94,6 +94,12 @@
     [call answerWithCompletion:completion];
 }
 
+- (void)customAnswer:(VSLCall *)call completion:(void (^)(NSError *error))completion {
+    CXAction *answerCall = [[CXAnswerCallAction alloc] initWithCallUUID:call.uuid];
+    [self requestCallKitAction:answerCall completion:completion];
+    VSLLogInfo(@"\"Answer Call Transaction\" requested succesfully for Call(%@)", call.uuid.UUIDString);
+}
+
 - (void)endCall:(VSLCall *)call completion:(void (^)(NSError *error))completion {
     CXAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:call.uuid];
     [self requestCallKitAction:endCallAction completion:completion];
@@ -156,14 +162,16 @@
     
     for (VSLCall *call in self.calls) {
         VSLLogVerbose(@"Ending call: %@", call.uuid.UUIDString);
-        NSError *hangupError;
-        [call hangup:&hangupError];
-        if (hangupError) {
-            VSLLogError(@"Could not hangup call(%@). Error: %@", call.uuid.UUIDString, hangupError);
-        } else {
-            [self.audioController deactivateAudioSession];
+        if (call != NULL && [VialerSIPLib sharedInstance].endpointAvailable) {
+            NSError *hangupError;
+            [call hangup:&hangupError];
+            if (hangupError) {
+                VSLLogError(@"Could not hangup call(%@). Error: %@", call.uuid.UUIDString, hangupError);
+            } else {
+                [self.audioController deactivateAudioSession];
+            }
+            [self removeCall:call];
         }
-        [self removeCall:call];
     }
 }
 
