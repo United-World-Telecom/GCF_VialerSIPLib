@@ -42,6 +42,7 @@
  *  #param completion A completion block giving access to an NSError when unable to answer the given call.
  */
 - (void)answerCall:(VSLCall * _Nonnull)call completion:(void (^ _Nonnull)(NSError * _Nullable error))completion;
+- (void)customAnswer:(VSLCall *)call completion:(void (^)(NSError *error))completion;
 
 /**
  *  End the given call.
